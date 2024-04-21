@@ -23,6 +23,7 @@ export default function Header() {
                 color="white"
                 paddingX={'10%'}
                 onMouseOver={() => setIsOpen('')}
+                onMouseLeave={() => setIsOpen('')}
             >
                 <Flex alignItems="center" mr={5} h={'full'}>
                     <Button
