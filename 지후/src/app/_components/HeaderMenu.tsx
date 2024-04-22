@@ -20,10 +20,6 @@ export default function HeaderMenu({ menu, isOpen, setIsOpen }: Props) {
         setIsOpen(menu.title);
     }
 
-    const handleCloseMenu = () => {
-        setIsOpen('');
-    }
-
     return (
         <Flex alignItems={'center'} ml={10} h={'full'} position={'relative'} onMouseOver={handleOpenMenu} >
             <Text fontSize={16} cursor={'pointer'}>
@@ -31,7 +27,7 @@ export default function HeaderMenu({ menu, isOpen, setIsOpen }: Props) {
             </Text>
             {
                 isOpen === menu.title && (
-                    <Box position={'absolute'} left={0} top={'60px'} zIndex={999} backgroundColor={COLORS.white} width={170} borderRadius={5} onMouseLeave={(e) => e.stopPropagation()}>
+                    <Box position={'absolute'} left={0} top={'60px'} zIndex={999} backgroundColor={COLORS.white} width={170} borderRadius={5} >
                         {
                             menu.sub_menu.map((sub_menu) => (
                                 <Flex key={sub_menu.title} cursor={'pointer'} mb={2} alignItems={'center'} mx={5} my={3}>
