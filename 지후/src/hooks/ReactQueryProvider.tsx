@@ -5,14 +5,16 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React, { useEffect, useState } from 'react'
 
 const ReactQueryProvider = ({ children }: React.PropsWithChildren) => {
-    const [queryClient] = useState(
-        new QueryClient({
+    const [queryClient] = useState(() => {
+        console.log('queryClient')
+        return new QueryClient({
             defaultOptions: {
                 queries: {
                     refetchOnWindowFocus: false,
                 }
             }
         })
+    }
     )
 
     return (

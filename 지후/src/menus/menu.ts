@@ -1,3 +1,5 @@
+import { FilterMenuTypes } from "@/types/utilsType"
+
 export const navMenu = [
     {
         title: '영화',
@@ -66,5 +68,55 @@ export const navMenu = [
                 path: '/talk'
             }
         ]
+    }
+]
+
+export const filterMenu: FilterMenuTypes[] = [
+    {
+        title: '정렬',
+        type: 'sort'
+    },
+    {
+        title: 'Where To Watch',
+        type: 'whereWatch'
+    },
+    {
+        title: '필터',
+        type: 'filter'
+    }
+]
+
+export const sortResults = [
+    {
+        title: '인기도 내림차순',
+        type: 'popularity.desc' //default
+    },
+    {
+        title: '인기도 오름차순',
+        type: 'popularity.asc'
+    },
+    {
+        title: '평점 내림차순',
+        type: 'vote_average.desc'
+    },
+    {
+        title: '평점 오름차순',
+        type: 'vote_average.asc'
+    },
+    {
+        title: '상영일 내림차순',
+        type: 'primary_release_date.desc'
+    },
+    {
+        title: '상영일 오름차순',
+        type: 'primary_release_date.asc'
+    },
+    {
+        title: '제목 내림차순',
+        type: 'title.desc'
+    },
+    {
+        title: '제목 오름차순',
+        type: 'title.asc'
     }
 ]
