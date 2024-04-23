@@ -1,5 +1,6 @@
 import { COLORS } from '@/assets/colors'
 import { Box, Flex, Text } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
 import React, { MouseEvent, useState } from 'react'
 
 interface Props {
@@ -15,6 +16,9 @@ interface Props {
 }
 
 export default function HeaderMenu({ menu, isOpen, setIsOpen }: Props) {
+
+    const router = useRouter();
+
     const handleOpenMenu = (e: MouseEvent) => {
         e.stopPropagation();
         setIsOpen(menu.title);
@@ -27,11 +31,11 @@ export default function HeaderMenu({ menu, isOpen, setIsOpen }: Props) {
             </Text>
             {
                 isOpen === menu.title && (
-                    <Box position={'absolute'} left={0} top={'60px'} zIndex={999} backgroundColor={COLORS.white} width={170} borderRadius={5} >
+                    <Box position={'absolute'} left={0} top={'60px'} zIndex={999} backgroundColor={COLORS.white} width={170} borderRadius={5} overflow={'hidden'}>
                         {
                             menu.sub_menu.map((sub_menu) => (
-                                <Flex key={sub_menu.title} cursor={'pointer'} mb={2} alignItems={'center'} mx={5} my={3}>
-                                    <Text color={COLORS.black} fontSize={13}>
+                                <Flex key={sub_menu.title} w={'full'} cursor={'pointer'} alignItems={'center'} px={2} py={1} _hover={{ backgroundColor: '#F0F0F0' }} onClick={() => router.push(`${sub_menu.path}`)}>
+                                    <Text color={COLORS.black} fontSize={15}>
                                         {sub_menu.title}
                                     </Text>
                                 </Flex>
