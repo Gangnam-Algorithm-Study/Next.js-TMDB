@@ -11,7 +11,6 @@ export default function FilterTab() {
 
     const pathname = usePathname();
     const [page, setPage] = useState<string>('');
-    const [queryParams, setQueryParams] = useState<string>('');
 
     useEffect(() => {
         switch (pathname) {
