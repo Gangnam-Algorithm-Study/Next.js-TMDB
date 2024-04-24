@@ -86,6 +86,7 @@ export const filterMenu: FilterMenuTypes[] = [
     }
 ]
 
+// sortFilter
 export const sortResults = [
     {
         title: '인기도 내림차순',
@@ -118,5 +119,84 @@ export const sortResults = [
     {
         title: '제목 오름차순',
         type: 'title.asc'
+    }
+]
+
+export const genreFilter = [
+    {
+        type: 28,
+        title: "액션"
+    },
+    {
+        type: 12,
+        title: "모험"
+    },
+    {
+        type: 16,
+        title: "애니메이션"
+    },
+    {
+        type: 35,
+        title: "코미디"
+    },
+    {
+        type: 80,
+        title: "범죄"
+    },
+    {
+        type: 99,
+        title: "다큐멘터리"
+    },
+    {
+        type: 18,
+        title: "드라마"
+    },
+    {
+        type: 10751,
+        title: "가족"
+    },
+    {
+        type: 14,
+        title: "판타지"
+    },
+    {
+        type: 36,
+        title: "역사"
+    },
+    {
+        type: 27,
+        title: "공포"
+    },
+    {
+        type: 10402,
+        title: "음악"
+    },
+    {
+        type: 9648,
+        title: "미스터리"
+    },
+    {
+        type: 10749,
+        title: "로맨스"
+    },
+    {
+        type: 878,
+        title: "SF"
+    },
+    {
+        type: 10770,
+        title: "TV 영화"
+    },
+    {
+        type: 53,
+        title: "스릴러"
+    },
+    {
+        type: 10752,
+        title: "전쟁"
+    },
+    {
+        type: 37,
+        title: "서부"
     }
 ]
