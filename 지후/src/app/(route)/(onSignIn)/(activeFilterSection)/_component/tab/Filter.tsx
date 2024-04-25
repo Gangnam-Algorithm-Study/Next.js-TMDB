@@ -60,6 +60,7 @@ export default function Filter() {
             borderWidth={1}
             borderTopWidth={0}
             borderBottomRadius={10}
+            mb={10}
 
         >
             <Box
@@ -206,6 +207,16 @@ export default function Filter() {
                         ))
                     }
                 </Flex>
+            </Box>
+            <Box
+                backgroundColor={COLORS.white}
+                borderBottomWidth={1}
+                px={5}
+                py={3}
+            >
+                <Text fontSize={14} fontWeight={100}>
+                    Certification
+                </Text>
             </Box>
             <Button onClick={onSubmit}>
                 Sumbit
