@@ -1,11 +1,56 @@
+import DatePickerModal from '@/app/_components/DatePickerModal';
 import { COLORS } from '@/assets/colors'
-import { Box, Checkbox, Flex, Radio, RadioGroup, Stack, Text, VStack } from '@chakra-ui/react'
+import useFilter from '@/hooks/useFilter';
+import { genreFilter } from '@/menus/menu';
+import { Box, Button, Checkbox, Flex, Input, Radio, RadioGroup, Stack, Text, VStack } from '@chakra-ui/react'
+import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react'
+
+type ChoiceDate = {
+    from: Date | '';
+    to: Date;
+}
 
 export default function Filter() {
 
     const [radioValue, setRadioValue] = useState<string>('1');
     const [checkboxValue, setCheckboxValue] = useState<boolean>(true);
+    const { createQueryString } = useFilter();
+    const [choiceDate, setChoiceDate] = useState<ChoiceDate>({
+        from: '',
+        to: new Date()
+    })
+    const [genre, setGenre] = useState<number[]>([]);
+    const searchParams = useSearchParams();
+
+    const onSubmit = () => {
+        console.log(searchParams.toString(), 'submit')
+
+        createQueryString('radioValue', radioValue);
+    }
+
+    const onChangeDate = (date: Date, name: string) => {
+        if (name === 'from') {
+            setChoiceDate({
+                ...choiceDate,
+                from: date
+            })
+        } else {
+            setChoiceDate({
+                ...choiceDate,
+                to: date
+            })
+        }
+    }
+
+    const onChangeGenre = (type: number) => {
+        if (genre.includes(type)) {
+            setGenre(genre.filter(item => item !== type))
+        } else {
+            setGenre([...genre, type])
+        }
+    }
+
 
     return (
         <Flex
@@ -15,6 +60,7 @@ export default function Filter() {
             borderWidth={1}
             borderTopWidth={0}
             borderBottomRadius={10}
+            mb={10}
 
         >
             <Box
@@ -106,7 +152,75 @@ export default function Filter() {
                         Search all releases?
                     </Text>
                 </Checkbox>
+                <Flex w={'full'} justifyContent={'space-between'} alignItems={'center'} mt={3}>
+                    <Text fontSize={12}>
+                        from
+                    </Text>
+                    <DatePickerModal
+                        onChange={onChangeDate}
+                        selected={choiceDate.from}
+                        name='from'
+                    />
+                </Flex>
+                <Flex w={'full'} justifyContent={'space-between'} alignItems={'center'} mt={3}>
+                    <Text fontSize={12}>
+                        to
+                    </Text>
+                    <DatePickerModal
+                        onChange={onChangeDate}
+                        selected={choiceDate.to}
+                        name='to'
+                    />
+                </Flex>
             </Box>
-        </Flex >
+            <Box
+                backgroundColor={COLORS.white}
+                borderBottomWidth={1}
+                px={5}
+                py={3}
+            >
+                <Text fontSize={14} fontWeight={100}>
+                    장르
+                </Text>
+                <Flex w={'full'} mt={3} flexWrap={'wrap'}>
+                    {
+                        genreFilter.map(item => (
+                            <Box
+                                key={item.type}
+                                mr={3}
+                                mb={3}
+                                borderWidth={.5}
+                                py={1}
+                                px={3}
+                                borderRadius={15}
+                                cursor={'pointer'}
+                                onClick={() => onChangeGenre(item.type)}
+                                backgroundColor={genre.includes(item.type) ? '#00B4E4' : COLORS.white}
+                            >
+                                <Text
+                                    fontSize={14}
+                                    color={genre.includes(item.type) ? COLORS.white : COLORS.black}
+                                >
+                                    {item.title}
+                                </Text>
+                            </Box>
+                        ))
+                    }
+                </Flex>
+            </Box>
+            <Box
+                backgroundColor={COLORS.white}
+                borderBottomWidth={1}
+                px={5}
+                py={3}
+            >
+                <Text fontSize={14} fontWeight={100}>
+                    Certification
+                </Text>
+            </Box>
+            <Button onClick={onSubmit}>
+                Sumbit
+            </Button>
+        </Flex>
     )
 }
