@@ -58,3 +58,12 @@ export interface MovieCreditsCrewTypes {
     department: string;
     job: string;
 }
+
+export interface FilterParamsTypes {
+    sorted: string,
+    date: {
+        from: string,
+        to: string
+    },
+    genre: number[]
+}

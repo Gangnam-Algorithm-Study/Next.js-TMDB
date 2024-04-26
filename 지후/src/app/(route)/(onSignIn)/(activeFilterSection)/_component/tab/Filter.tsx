@@ -12,10 +12,8 @@ type ChoiceDate = {
 }
 
 export default function Filter() {
-
     const [radioValue, setRadioValue] = useState<string>('1');
     const [checkboxValue, setCheckboxValue] = useState<boolean>(true);
-    const { createQueryString } = useFilter();
     const [choiceDate, setChoiceDate] = useState<ChoiceDate>({
         from: '',
         to: new Date()
@@ -25,8 +23,6 @@ export default function Filter() {
 
     const onSubmit = () => {
         console.log(searchParams.toString(), 'submit')
-
-        createQueryString('radioValue', radioValue);
     }
 
     const onChangeDate = (date: Date, name: string) => {
@@ -61,6 +57,7 @@ export default function Filter() {
             borderTopWidth={0}
             borderBottomRadius={10}
             mb={10}
+            overflow={'hidden'}
 
         >
             <Box
@@ -218,7 +215,7 @@ export default function Filter() {
                     Certification
                 </Text>
             </Box>
-            <Button onClick={onSubmit}>
+            <Button onClick={onSubmit} borderRadius={0} colorScheme='telegram'>
                 Sumbit
             </Button>
         </Flex>
