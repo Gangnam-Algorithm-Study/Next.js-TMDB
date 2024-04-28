@@ -18,6 +18,7 @@ export default function Filter() {
         from: '',
         to: new Date()
     })
+    const { selectedFilter } = useFilter();
     const [genre, setGenre] = useState<number[]>([]);
     const searchParams = useSearchParams();
 
@@ -40,6 +41,7 @@ export default function Filter() {
     }
 
     const onChangeGenre = (type: number) => {
+        selectedFilter('genre', type);
         if (genre.includes(type)) {
             setGenre(genre.filter(item => item !== type))
         } else {
