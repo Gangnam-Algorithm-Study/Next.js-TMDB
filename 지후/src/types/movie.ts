@@ -59,11 +59,15 @@ export interface MovieCreditsCrewTypes {
     job: string;
 }
 
+export type DateType = {
+    from: string,
+    to: string
+}
+
+export type GenreType = number[]
+
 export interface FilterParamsTypes {
     sorted: string,
-    date: {
-        from: string,
-        to: string
-    },
-    genre: number[]
+    date: DateType,
+    genre: GenreType
 }
