@@ -8,7 +8,7 @@ type FilterValueType = number | string | { from: string, to: string }
 export interface FilterContentType {
     filterData: FilterParamsTypes,
     setFilterData: (type: FilterType, value: FilterValueType) => void, // Updated type here
-    generateFilterUrl: (state: FilterParamsTypes) => string
+    generateFilterUrl: (state: FilterParamsTypes, type?: string) => string
 }
 
 
@@ -60,15 +60,22 @@ export const useFilterStore = create<FilterContentType>((set) => ({
     }),
     generateFilterUrl: (state: FilterParamsTypes) => {
         const filterUrl = new URLSearchParams();
-        if (state.date.from || state.date.to) {
-            filterUrl.append('date', `${state.date.from},${state.date.to}`)
+
+        if (state.date.from) {
+            filterUrl.append('primary_release_date.gte', `${state.date.from}`);
         }
+
+        if (state.date.to) {
+            filterUrl.append('primary_release_date.lte', `${state.date.to}`);
+        }
+
         if (state.genre.length) {
             filterUrl.append('genre', state.genre.join(','))
         }
         if (state.sorted) {
             filterUrl.append('sorted', state.sorted)
         }
+
         return filterUrl.toString();
     }
 }))

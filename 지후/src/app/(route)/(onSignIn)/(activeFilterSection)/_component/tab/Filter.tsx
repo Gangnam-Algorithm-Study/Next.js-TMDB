@@ -29,10 +29,12 @@ export default function Filter() {
     }
 
     const onChangeDate = (date: Date, name: 'from' | 'to') => {
+        console.log(date)
         setChoiceDate({
             ...choiceDate,
             [name]: date,
         })
+        // zustand
         setFilterData('date', {
             ...filterData.date,
             [name]: dayjs(date).format('YYYY-MM-DD')
