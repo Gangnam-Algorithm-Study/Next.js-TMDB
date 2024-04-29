@@ -8,8 +8,8 @@ import CalandarIcon from "@/assets/src/CalandarIcon";
 
 interface Props {
     selected: Date | '';
-    onChange: (date: Date, name: string) => void;
-    name: string;
+    onChange: (date: Date, name: 'from' | 'to') => void;
+    name: 'from' | 'to';
 }
 
 export default function DatePickerModal({ onChange, selected, name }: Props) {
