@@ -25,7 +25,6 @@ export default function useFilter() {
         }
 
         if (type === 'genre' && typeof value === 'number') {
-            console.log(filterTarget.genre, value, '밸류')
             if (filterTarget.genre.includes(value)) {
                 console.log('remove');
                 setFilterTarget({

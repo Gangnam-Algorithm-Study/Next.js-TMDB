@@ -2,13 +2,15 @@ import DatePickerModal from '@/app/_components/DatePickerModal';
 import { COLORS } from '@/assets/colors'
 import useFilter from '@/hooks/useFilter';
 import { genreFilter } from '@/menus/menu';
+import { useFilterStore } from '@/store/createFilterUrl';
 import { Box, Button, Checkbox, Flex, Input, Radio, RadioGroup, Stack, Text, VStack } from '@chakra-ui/react'
+import dayjs from 'dayjs';
 import { useSearchParams } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 type ChoiceDate = {
-    from: Date | '';
-    to: Date;
+    from: Date | string;
+    to: Date | string;
 }
 
 export default function Filter() {
@@ -18,30 +20,33 @@ export default function Filter() {
         from: '',
         to: new Date()
     })
-    const { selectedFilter } = useFilter();
     const [genre, setGenre] = useState<number[]>([]);
     const searchParams = useSearchParams();
+    const { filterData, setFilterData, generateFilterUrl } = useFilterStore();
 
     const onSubmit = () => {
-        console.log(searchParams.toString(), 'submit')
+        console.log(generateFilterUrl(filterData), 'submit')
     }
 
-    const onChangeDate = (date: Date, name: string) => {
-        if (name === 'from') {
-            setChoiceDate({
-                ...choiceDate,
-                from: date
-            })
-        } else {
-            setChoiceDate({
-                ...choiceDate,
-                to: date
-            })
-        }
+    const onChangeDate = (date: Date, name: 'from' | 'to') => {
+        console.log(date)
+        setChoiceDate({
+            ...choiceDate,
+            [name]: date,
+        })
+        // zustand
+        setFilterData('date', {
+            ...filterData.date,
+            [name]: dayjs(date).format('YYYY-MM-DD')
+        })
     }
+
+    useEffect(() => {
+        console.log(filterData, 'choiceDate')
+    }, [filterData])
 
     const onChangeGenre = (type: number) => {
-        selectedFilter('genre', type);
+        setFilterData('genre', type);
         if (genre.includes(type)) {
             setGenre(genre.filter(item => item !== type))
         } else {
@@ -157,7 +162,7 @@ export default function Filter() {
                     </Text>
                     <DatePickerModal
                         onChange={onChangeDate}
-                        selected={choiceDate.from}
+                        selected={choiceDate.from as Date}
                         name='from'
                     />
                 </Flex>
@@ -167,7 +172,7 @@ export default function Filter() {
                     </Text>
                     <DatePickerModal
                         onChange={onChangeDate}
-                        selected={choiceDate.to}
+                        selected={choiceDate.from as Date}
                         name='to'
                     />
                 </Flex>
