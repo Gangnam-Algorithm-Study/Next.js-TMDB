@@ -1,5 +1,6 @@
 import { COLORS } from '@/assets/colors';
 import ArrowIcon from '@/assets/src/ArrowIcon';
+import { useFilterStore } from '@/store/createFilterUrl';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React, { useState } from 'react'
 
@@ -11,6 +12,7 @@ export default function SelectBox({ arr }: Props) {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedOptions, setSelectedOptions] = useState<string>(arr[0].title);
+    const { setFilterData } = useFilterStore();
 
     return (
         <Box>
@@ -58,7 +60,7 @@ export default function SelectBox({ arr }: Props) {
                                         alignItems={'center'}
                                         _hover={{ backgroundColor: COLORS.light_gray }}
                                         onClick={() => {
-                                            setSelectedOptions(item.title)
+                                            setFilterData('sorted', item.type)
                                             setIsOpen(false)
                                         }}
                                     >

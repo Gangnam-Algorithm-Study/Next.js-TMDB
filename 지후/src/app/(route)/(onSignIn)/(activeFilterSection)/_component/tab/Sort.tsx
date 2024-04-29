@@ -3,12 +3,8 @@ import { Flex, Text } from '@chakra-ui/react'
 import React from 'react'
 import SelectBox from '../SelectBox'
 import { sortResults } from '@/menus/menu'
-import useFilter from '@/hooks/useFilter'
 
 export default function Sort() {
-
-    const { selectedFilter } = useFilter();
-
     return (
         <Flex
             w={'full'}

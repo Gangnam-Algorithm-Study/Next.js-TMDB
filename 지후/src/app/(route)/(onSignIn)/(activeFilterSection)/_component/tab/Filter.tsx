@@ -1,6 +1,5 @@
 import DatePickerModal from '@/app/_components/DatePickerModal';
 import { COLORS } from '@/assets/colors'
-import useFilter from '@/hooks/useFilter';
 import { genreFilter } from '@/menus/menu';
 import { useFilterStore } from '@/store/createFilterUrl';
 import { Box, Button, Checkbox, Flex, Input, Radio, RadioGroup, Stack, Text, VStack } from '@chakra-ui/react'
@@ -25,6 +24,7 @@ export default function Filter() {
     const { filterData, setFilterData, generateFilterUrl } = useFilterStore();
 
     const onSubmit = () => {
+        console.log(dayjs().add(6, 'month').subtract(1, 'day').format('YYYY-MM-DD'));
         console.log(generateFilterUrl(filterData), 'submit')
     }
 
