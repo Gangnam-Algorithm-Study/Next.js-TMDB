@@ -28,7 +28,7 @@ const Header = () => {
           <Link href="/home">
             <span>TMDB</span>
           </Link>
-          <Link href="/movies">
+          <Link href="/movie">
             <strong>영화</strong>
           </Link>
           <Link href="/tv">
