@@ -1,6 +1,5 @@
 import DatePickerModal from '@/app/_components/DatePickerModal';
 import { COLORS } from '@/assets/colors'
-import useFilter from '@/hooks/useFilter';
 import { genreFilter } from '@/menus/menu';
 import { useFilterStore } from '@/store/createFilterUrl';
 import { Box, Button, Checkbox, Flex, Input, Radio, RadioGroup, Stack, Text, VStack } from '@chakra-ui/react'
@@ -22,10 +21,14 @@ export default function Filter() {
     })
     const [genre, setGenre] = useState<number[]>([]);
     const searchParams = useSearchParams();
-    const { filterData, setFilterData, generateFilterUrl } = useFilterStore();
+    const { filterData, setFilterData, generateFilterUrl, setUrl } = useFilterStore();
 
     const onSubmit = () => {
-        console.log(generateFilterUrl(filterData), 'submit')
+        const url = generateFilterUrl(filterData);
+
+        console.log(url);
+
+        setUrl(url);
     }
 
     const onChangeDate = (date: Date, name: 'from' | 'to') => {
