@@ -135,3 +135,26 @@ export interface IMovieGrade {
   meaning: string;
   order: number;
 }
+
+export interface IMovieGenre {
+  genres: {
+    id: number;
+    name: string;
+  }[];
+}
+
+export interface IMovieLanguage {
+  iso_639_1: string;
+  english_name: string;
+  name: string;
+}
+
+export interface IMovieProvider {
+  results: {
+    display_priorities: {};
+    display_priority: number;
+    logo_path: string;
+    provider_name: string;
+    provider_id: number;
+  }[];
+}
