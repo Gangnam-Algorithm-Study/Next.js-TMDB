@@ -70,7 +70,7 @@ export const useFilterStore = create<FilterContentType>((set) => ({
         }
 
         if (state.genre.length) {
-            filterUrl.append('without_genres', state.genre.join(','))
+            filterUrl.append('with_genres', state.genre.join(','))
         }
         if (state.sorted) {
             filterUrl.append('sort_by', state.sorted)

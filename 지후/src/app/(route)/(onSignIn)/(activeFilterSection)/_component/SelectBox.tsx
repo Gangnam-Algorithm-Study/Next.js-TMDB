@@ -60,7 +60,8 @@ export default function SelectBox({ arr }: Props) {
                                         alignItems={'center'}
                                         _hover={{ backgroundColor: COLORS.light_gray }}
                                         onClick={() => {
-                                            setFilterData('sorted', item.type)
+                                            setFilterData('sorted', item.type);
+                                            setSelectedOptions(item.title);
                                             setIsOpen(false)
                                         }}
                                     >

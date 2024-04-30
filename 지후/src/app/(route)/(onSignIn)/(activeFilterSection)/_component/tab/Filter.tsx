@@ -21,11 +21,14 @@ export default function Filter() {
     })
     const [genre, setGenre] = useState<number[]>([]);
     const searchParams = useSearchParams();
-    const { filterData, setFilterData, generateFilterUrl } = useFilterStore();
+    const { filterData, setFilterData, generateFilterUrl, setUrl } = useFilterStore();
 
     const onSubmit = () => {
-        console.log(dayjs().add(6, 'month').subtract(1, 'day').format('YYYY-MM-DD'));
-        console.log(generateFilterUrl(filterData), 'submit')
+        const url = generateFilterUrl(filterData);
+
+        console.log(url);
+
+        setUrl(url);
     }
 
     const onChangeDate = (date: Date, name: 'from' | 'to') => {
