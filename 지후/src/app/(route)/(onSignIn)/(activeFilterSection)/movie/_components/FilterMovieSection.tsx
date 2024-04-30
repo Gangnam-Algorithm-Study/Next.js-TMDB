@@ -1,6 +1,7 @@
 "use client";
 
 import { getMovies } from '@/api/movie';
+import Loading from '@/app/_components/Loading';
 import MovieList from '@/app/_components/MovieList';
 import { useFilterStore } from '@/store/createFilterUrl';
 import { MovieTypes } from '@/types/movie';
@@ -18,7 +19,8 @@ export default function MovieSection() {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-        isFetching
+        isFetching,
+        isLoading
     } = useInfiniteQuery({
         queryKey: ['getMovies', url],
         initialPageParam: 1,
@@ -36,12 +38,19 @@ export default function MovieSection() {
         delay: 0,
     })
 
+
+
     useEffect(() => {
         if (inView) ((!isFetching && hasNextPage)) && fetchNextPage();
 
         console.log(data)
     }, [inView, isFetching, hasNextPage, fetchNextPage])
 
+    if (isLoading) {
+        return (
+            <Loading />
+        )
+    }
     return (
         <ChakraProvider>
             <Flex flex={1}>
@@ -62,7 +71,7 @@ export default function MovieSection() {
                     px={3}
                 >
                     <Flex gap={0} height={'100%'} width={'100%'} flexDirection={'column'} alignItems={'center'}>
-                        <Grid templateColumns={'repeat(4,1fr)'} gap={6}>
+                        <Grid templateColumns={'repeat(5,1fr)'} gap={6}>
                             {data?.pages.map((group, i) => (
                                 <React.Fragment key={i}>
                                     {group?.results?.map((item: MovieTypes) => (

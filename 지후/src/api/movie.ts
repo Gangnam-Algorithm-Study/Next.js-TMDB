@@ -38,7 +38,7 @@ export const getMovieCredits: QueryFunction<MovieCreditsTypes, [_1: string, _2: 
 }
 
 export const getMovies = async ({ pageCount, url }: { pageCount: number, url?: string }) => {
-    const { data } = await tmdb.get(`/discover/movie?${url}&page=${pageCount}`);
+    const { data } = await tmdb.get(`/discover/movie?include_adult=false&include_video=false&${url}&page=${pageCount}`);
 
     return data;
 }
