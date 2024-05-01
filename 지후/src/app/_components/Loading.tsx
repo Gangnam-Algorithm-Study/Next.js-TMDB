@@ -12,10 +12,6 @@ export default function Loading() {
                     loop: true,
                     autoplay: true,
                     animationData: require('@/assets/src/loading.json'),
-                    rendererSettings: {
-                        preserveAspectRatio: 'xMidYMid slice'
-                    }
-
                 }}
                 width={200}
                 height={200}

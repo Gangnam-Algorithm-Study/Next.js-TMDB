@@ -5,3 +5,8 @@ export type FilterMenuTypes = {
     title: OptionTabTitleTypes;
     type: OptionTabTypeTypes;
 };
+
+export interface IconTypes {
+    color?: string,
+    size?: number
+}

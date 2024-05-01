@@ -1,0 +1,5 @@
+.container {
+    flex: 1;
+    min-height: 100dvh;
+    background-color: #21201E;
+}
