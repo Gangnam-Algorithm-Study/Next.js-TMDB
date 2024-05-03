@@ -53,7 +53,6 @@ export default function Movie(): ReactElement {
                         }
                     }
                 }
-                paddingY={10}
             >
                 <Flex gap={0} height={'100%'} width={'100%'} flexDirection={'column'} alignItems={'center'}>
                     <Grid templateColumns={'repeat(4,1fr)'} gap={6}>
