@@ -4,7 +4,7 @@ import { dehydrate, useInfiniteQuery } from '@tanstack/react-query'
 import pagination from '@/apis/pagination'
 import { useEffect, useRef } from 'react'
 import useIntersectionObserver from '@/hooks/useIntersectionObserver'
-import Row from '@/components/Row'
+import Row from '@/components/List'
 import { InfinitePageProps } from '@/types/pageScroll'
 import styled from '@emotion/styled'
 import { queryClient } from '@/pages/_app'
@@ -59,25 +59,21 @@ const Home = () => {
 
   console.log(data?.pages[0].results)
   return (
-    <div>
+    <Container>
       {status === 'pending' && <p>불러오는 중</p>}
 
       {status === 'error' && <p>{error.message}</p>}
 
       {status === 'success' && (
         <>
-          <div>
-            <Row data={data as InfinitePageProps} />
-          </div>
-          {/*{isFetchingNextPage && <p>계속 불러오는 중</p>}
-          <div ref={loadMoreRef} />*/}
+          <Row data={data as InfinitePageProps} />
         </>
       )}
 
       <Hide ref={loadMoreRef} />
 
       {isFetchingNextPage && <p>계속 불러오는 중</p>}
-    </div>
+    </Container>
   )
 }
 
@@ -97,6 +93,16 @@ export async function getServerSideProps() {
     },
   }
 }
+
+const Container = styled.div`
+  width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+`
 
 const Hide = styled.div`
   height: 1px;

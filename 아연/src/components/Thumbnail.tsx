@@ -7,12 +7,13 @@ interface ThumbnailProps {
 }
 function Thumbnail({ imagePath, title }: ThumbnailProps) {
   return (
-    <div>
+    <>
       <LazyLoadImage
-        src={`https://image.tmdb.org/t/p/w500${imagePath}`}
+        src={`https://image.tmdb.org/t/p/w92${imagePath}`}
+        style={{ objectFit: 'fill' }}
         alt={title}
       />
-    </div>
+    </>
   )
 }
 

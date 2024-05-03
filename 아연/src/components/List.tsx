@@ -5,7 +5,7 @@ import Card from '@/components/Card'
 
 export default function Row({ data }: { data: InfinitePageProps }) {
   return (
-    <Wrapper>
+    <ListWrapper>
       {data.pages.map((group: DataProps, index: number) => (
         <div key={index}>
           {group.results.map((movie: Movie) => (
@@ -13,14 +13,10 @@ export default function Row({ data }: { data: InfinitePageProps }) {
           ))}
         </div>
       ))}
-    </Wrapper>
+    </ListWrapper>
   )
 }
-
-const Container = styled.div`
-  background-color: white;
-`
-
-const Wrapper = styled.div`
-  padding: 100px;
+const ListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `
