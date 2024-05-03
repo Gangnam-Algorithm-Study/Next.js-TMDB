@@ -98,14 +98,28 @@ const MovieFilter: FC<Props> = ({ onSearch }) => {
   }, []);
 
   /** 개봉일 조회 시작 날짜 */
-  const handleChangeFromDate = useCallback((value: any) => {
-    setFromDate(value);
-  }, []);
+  const handleChangeFromDate = useCallback(
+    (_fromDate: any) => {
+      if (dayjs(_fromDate).isAfter(dayjs(toDate))) {
+        alert("시작일은 종료일보다 늦을 수 없습니다.");
+      } else {
+        setFromDate(_fromDate);
+      }
+    },
+    [toDate]
+  );
 
   /** 개봉일 조회 종료 날짜 */
-  const handleChangeToDate = useCallback((value: any) => {
-    setToDate(value);
-  }, []);
+  const handleChangeToDate = useCallback(
+    (_toDate: any) => {
+      if (dayjs(_toDate).isBefore(dayjs(fromDate))) {
+        alert("종료일은 시작일보다 이를 수 없습니다.");
+      } else {
+        setToDate(_toDate);
+      }
+    },
+    [fromDate]
+  );
 
   /** 런타임 선택  */
   const handleChangeRunTime = useCallback((_runTime: number[]) => {
