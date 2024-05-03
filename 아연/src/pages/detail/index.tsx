@@ -1,8 +1,10 @@
 import { getDetail, prefetchDetail } from '@/apis/detail'
 import Thumbnail from '@/components/Thumbnail'
+import SEO from '@/components/common/SEO'
 import { queryClient } from '@/pages/_app'
 
 import { Genre, Movie } from '@/types/movie'
+import { getImageUrl } from '@/utils/image'
 import styled from '@emotion/styled'
 
 import { dehydrate, useQuery } from '@tanstack/react-query'
@@ -24,34 +26,41 @@ const Detail = ({ id }: DetailProps) => {
   return (
     <>
       {isSuccess ? (
-        <Container>
-          <Thumbnail
-            imagePath={data.poster_path}
+        <>
+          <SEO
             title={data.title}
-            width={500}
+            description={data.description}
+            image={getImageUrl({ imagePath: data.poster_path, width: 500 })}
           />
-          <InfoWrapper>
-            <Title>{data.title}</Title>
+          <Container>
+            <Thumbnail
+              imagePath={data.poster_path}
+              title={data.title}
+              width={500}
+            />
+            <InfoWrapper>
+              <Title>{data.title}</Title>
 
-            <Genres>
-              {data.genres.map((genre: Genre, idx: number) => (
-                <div key={idx}>{genre.name}</div>
-              ))}
-            </Genres>
+              <Genres>
+                {data.genres.map((genre: Genre, idx: number) => (
+                  <div key={idx}>{genre.name}</div>
+                ))}
+              </Genres>
 
-            <Info>
-              <div>Language: {data.original_language}</div>
-              <div>Release: {data.release_date}</div>
-            </Info>
-            <Info>
-              <div>RunTime: {data.runtime} min</div>
-              <div>Rate: {data.vote_average}/10</div>
-            </Info>
-            <Row>
-              <OverView>{data.overview}</OverView>
-            </Row>
-          </InfoWrapper>
-        </Container>
+              <Info>
+                <div>Language: {data.original_language}</div>
+                <div>Release: {data.release_date}</div>
+              </Info>
+              <Info>
+                <div>RunTime: {data.runtime} min</div>
+                <div>Rate: {data.vote_average}/10</div>
+              </Info>
+              <Row>
+                <OverView>{data.overview}</OverView>
+              </Row>
+            </InfoWrapper>
+          </Container>
+        </>
       ) : (
         <span>에러 남...</span>
       )}{' '}

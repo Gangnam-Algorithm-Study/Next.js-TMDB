@@ -1,15 +1,20 @@
 import SEO from '@/components/common/SEO'
 import styled from '@emotion/styled'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
 function Layout({ children }: LayoutProps) {
+  const { pathname } = useRouter()
+  console.log(pathname)
   return (
     <>
-      <SEO title="Cognisle" description="지혜의 숲" image="" />
+      {pathname !== '/detail' && (
+        <SEO title="Movie App" description="영화 앱" image="" />
+      )}
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
