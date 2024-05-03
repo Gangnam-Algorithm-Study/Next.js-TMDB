@@ -2,12 +2,13 @@ import requests from '@/utils/request'
 
 import { dehydrate, useInfiniteQuery } from '@tanstack/react-query'
 import pagination from '@/apis/pagination'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import useIntersectionObserver from '@/hooks/useIntersectionObserver'
 import Row from '@/components/Row'
 import { InfinitePageProps } from '@/types/pageScroll'
 import styled from '@emotion/styled'
 import { queryClient } from '@/pages/_app'
+import { getScrollY, setScrollY } from '@/utils/scroll'
 
 const Home = () => {
   const loadMoreRef = useRef(null)
@@ -49,6 +50,12 @@ const Home = () => {
     target: loadMoreRef,
     onIntersect,
   })
+
+  useEffect(() => {
+    if (getScrollY()) {
+      setScrollY()
+    }
+  }, [])
 
   console.log(data?.pages[0].results)
   return (

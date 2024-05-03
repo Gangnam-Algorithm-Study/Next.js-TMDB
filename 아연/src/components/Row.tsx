@@ -1,13 +1,15 @@
 import Thumbnail from '@/components/Thumbnail'
-import { Movie } from '@/typings'
+import { Movie } from '@/types/movie'
 import styled from '@emotion/styled'
 import { DataProps, InfinitePageProps } from '@/types/pageScroll'
 import { useRouter } from 'next/router'
+import { saveScrollY } from '@/utils/scroll'
 
 export default function Row({ data }: { data: InfinitePageProps }) {
   const router = useRouter()
   const handle = (id: Movie['id']) => {
     console.log(id)
+    saveScrollY()
     router.push(`/detail?id=${id}`)
   }
   return (
