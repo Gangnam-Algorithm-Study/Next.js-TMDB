@@ -14,13 +14,13 @@ export default function DetailHeader() {
 
     return (
         <ChakraProvider>
-            <Flex paddingX={5} w={'full'} h={70} backgroundColor={COLORS.real_blue} alignItems={'center'}>
+            <Flex paddingX={5} w={'full'} h={70} backgroundColor={COLORS.black} alignItems={'center'}>
                 <Button
                     onClick={() => router.back()}
                     backgroundColor={'transparent'}
                     _hover={{ backgroundColor: 'transparent' }}
                 >
-                    <BackIcon backgroundColor={COLORS.logo_color} />
+                    <BackIcon backgroundColor={COLORS.white} />
                 </Button>
             </Flex>
         </ChakraProvider>

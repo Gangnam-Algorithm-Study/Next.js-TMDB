@@ -5,6 +5,7 @@ import CoffieIcon from '@/assets/src/CoffieIcon'
 import FilmIcon from '@/assets/src/FilmIcon'
 import LikeIcon from '@/assets/src/LikeIcon'
 import Logo from '@/assets/src/Logo'
+import SearchIcon from '@/assets/src/SearchIcon'
 import TrendingIcon from '@/assets/src/TrendingIcon'
 import { Box, Center, ChakraProvider, Flex, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
@@ -19,6 +20,11 @@ export default function SideBar() {
             title: 'Home',
             path: '/',
             icon: () => <FilmIcon color={COLORS.white} size={20} />
+        },
+        {
+            title: 'Search',
+            path: '/movie',
+            icon: () => <SearchIcon color={COLORS.white} size={20} />
         },
         {
             title: 'Trending',
@@ -44,7 +50,7 @@ export default function SideBar() {
 
     return (
         <ChakraProvider>
-            <Flex minW={'20%'} flexDirection={'column'} backgroundColor={COLORS.black} position={'sticky'} top={0} h={'full'}>
+            <Flex minW={'20%'} h={'100vh'} flexDirection={'column'} backgroundColor={COLORS.black} position={'sticky'} top={0}>
                 <Center w={'full'} h={200}>
                     <CoffieIcon />
                     <Text

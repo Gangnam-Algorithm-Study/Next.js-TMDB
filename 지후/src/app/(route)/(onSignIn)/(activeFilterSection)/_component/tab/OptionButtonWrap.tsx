@@ -5,6 +5,7 @@ import React, { ReactElement, useState } from 'react'
 import Sort from './Sort';
 import WhereWatch from './WhereWatch';
 import Filter from './Filter';
+import { COLORS } from '@/assets/colors';
 
 export default function OptionButtonWrap({ title, type }: FilterMenuTypes) {
 
@@ -37,6 +38,7 @@ export default function OptionButtonWrap({ title, type }: FilterMenuTypes) {
                 borderBottomRadius={isOpen ? 0 : 10}
                 alignItems={'center'}
                 boxShadow={'xl'}
+                backgroundColor={COLORS.white}
                 px={4}
                 borderWidth={1}
                 mt={3}

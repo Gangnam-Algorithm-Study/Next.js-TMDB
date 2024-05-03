@@ -24,9 +24,9 @@ export default function FilterTab() {
 
     return (
         <ChakraProvider>
-            <VStack w={300} h={800} mt={5}>
+            <VStack w={300} h={800} mt={5} >
                 <Box w={'full'}>
-                    <Text color={COLORS.black} fontWeight={'bold'} fontSize={20}>
+                    <Text color={COLORS.white} fontWeight={'bold'} fontSize={20}>
                         {page}
                     </Text>
                 </Box>
@@ -38,6 +38,6 @@ export default function FilterTab() {
                     }
                 </Flex>
             </VStack>
-        </ChakraProvider>
+        </ChakraProvider >
     )
 }

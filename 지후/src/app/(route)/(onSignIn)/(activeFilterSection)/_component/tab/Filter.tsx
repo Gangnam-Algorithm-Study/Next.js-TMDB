@@ -20,15 +20,12 @@ export default function Filter() {
         to: new Date()
     })
     const [genre, setGenre] = useState<number[]>([]);
-    const searchParams = useSearchParams();
     const { filterData, setFilterData, generateFilterUrl, setUrl } = useFilterStore();
 
     const onSubmit = () => {
         const url = generateFilterUrl(filterData);
-
-        console.log(url);
-
         setUrl(url);
+        window.scrollTo(0, 0);
     }
 
     const onChangeDate = (date: Date, name: 'from' | 'to') => {
@@ -70,7 +67,7 @@ export default function Filter() {
             overflow={'hidden'}
 
         >
-            <Box
+            {/* <Box
                 backgroundColor={COLORS.white}
                 borderBottomWidth={1}
                 px={5}
@@ -98,8 +95,8 @@ export default function Filter() {
                         </Radio>
                     </Stack>
                 </RadioGroup>
-            </Box>
-            <Box
+            </Box> */}
+            {/* <Box
                 backgroundColor={COLORS.white}
                 borderBottomWidth={1}
                 px={5}
@@ -144,7 +141,7 @@ export default function Filter() {
                         </Flex>
                     )
                 }
-            </Box>
+            </Box> */}
             <Box
                 backgroundColor={COLORS.white}
                 borderBottomWidth={1}

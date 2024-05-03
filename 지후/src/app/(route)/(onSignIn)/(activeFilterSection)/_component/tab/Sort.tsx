@@ -16,7 +16,7 @@ export default function Sort() {
             py={3}
             flexDirection={'column'}
         >
-            <Text fontSize={14} color={COLORS.gray} fontWeight={300}>
+            <Text fontSize={14} color={COLORS.black} fontWeight={300}>
                 Sort Results By
             </Text>
             <SelectBox arr={sortResults} />

@@ -2,7 +2,9 @@
 
 import { getMovies } from '@/api/movie';
 import Loading from '@/app/_components/Loading';
+import MovieCard from '@/app/_components/MovieCard';
 import MovieList from '@/app/_components/MovieList';
+import { COLORS } from '@/assets/colors';
 import { useFilterStore } from '@/store/createFilterUrl';
 import { MovieTypes } from '@/types/movie';
 import { Box, ChakraProvider, Flex, Grid, Stack, Text } from '@chakra-ui/react';
@@ -42,18 +44,18 @@ export default function MovieSection() {
 
     useEffect(() => {
         if (inView) ((!isFetching && hasNextPage)) && fetchNextPage();
-
-        console.log(data)
     }, [inView, isFetching, hasNextPage, fetchNextPage])
 
     if (isLoading) {
         return (
-            <Loading />
+            <Flex w={'100%'} h={'100%'} backgroundColor={COLORS.black}>
+                <Loading />
+            </Flex>
         )
     }
     return (
         <ChakraProvider>
-            <Flex flex={1}>
+            <Flex flex={1} px={5}>
                 <Flex
                     flex={1}
                     justifyContent={'center'}
@@ -71,11 +73,11 @@ export default function MovieSection() {
                     px={3}
                 >
                     <Flex gap={0} height={'100%'} width={'100%'} flexDirection={'column'} alignItems={'center'}>
-                        <Grid templateColumns={'repeat(5,1fr)'} gap={6}>
+                        <Grid templateColumns={'repeat(4,1fr)'} gap={6}>
                             {data?.pages.map((group, i) => (
                                 <React.Fragment key={i}>
                                     {group?.results?.map((item: MovieTypes) => (
-                                        <MovieList key={item.id} data={item} />
+                                        <MovieCard key={item.id} movie={item} />
                                     ))}
                                 </React.Fragment>
                             ))}
