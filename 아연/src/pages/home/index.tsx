@@ -59,7 +59,7 @@ const Home = () => {
 
   console.log(data?.pages[0].results)
   return (
-    <Container>
+    <>
       {status === 'pending' && <p>불러오는 중</p>}
 
       {status === 'error' && <p>{error.message}</p>}
@@ -73,7 +73,7 @@ const Home = () => {
       <Hide ref={loadMoreRef} />
 
       {isFetchingNextPage && <p>계속 불러오는 중</p>}
-    </Container>
+    </>
   )
 }
 
@@ -93,16 +93,6 @@ export async function getServerSideProps() {
     },
   }
 }
-
-const Container = styled.div`
-  width: 400px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 2rem 0;
-`
 
 const Hide = styled.div`
   height: 1px;

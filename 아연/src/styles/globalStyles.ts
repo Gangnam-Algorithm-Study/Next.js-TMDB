@@ -114,6 +114,7 @@ export default css`
     line-height: 1;
     font-family: 'Ydestreet', 'Noto Sans', sans-serif;
     background: black;
+    align-items: center;
   }
   ol,
   ul {

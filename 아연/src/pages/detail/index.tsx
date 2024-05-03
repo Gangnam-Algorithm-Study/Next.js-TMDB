@@ -24,32 +24,32 @@ const Detail = ({ id }: DetailProps) => {
   return (
     <>
       {isSuccess ? (
-        <>
+        <Container>
           <Thumbnail
             imagePath={data.poster_path}
             title={data.title}
             width={500}
           />
-          <Wrapper>
-            <div>
+          <InfoWrapper>
+            <Title>{data.title}</Title>
+
+            <Genres>
               {data.genres.map((genre: Genre, idx: number) => (
                 <div key={idx}>{genre.name}</div>
               ))}
-            </div>
-          </Wrapper>{' '}
-          <Wrapper>
-            <div>{data.title}</div>
-          </Wrapper>
-          <Wrapper>
-            <div>{data.original_language}</div>
-            <div>{data.release_date}</div>
-            <div>{data.runtime}</div>
-            <div>{data.vote_average}</div>
-          </Wrapper>
-          <Wrapper>
-            <div>{data.overview}</div>
-          </Wrapper>
-        </>
+            </Genres>
+
+            <Info>
+              <div>Language: {data.original_language}</div>
+              <div>Release: {data.release_date}</div>
+              <div>RunTime: {data.runtime} min</div>
+              <div>Rate: {data.vote_average}</div>
+            </Info>
+            <Row>
+              <div>{data.overview}</div>
+            </Row>
+          </InfoWrapper>
+        </Container>
       ) : (
         <span>에러 남...</span>
       )}{' '}
@@ -78,6 +78,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-const Wrapper = styled.div`
+const Container = styled.div``
+
+const InfoWrapper = styled.div`
+  margin-top: 2.5rem 0;
+  color: white;
+`
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  margin: 0.5rem 0;
+`
+const Title = styled.div`
+  font-size: 2.5rem;
+  color: white;
+`
+
+const Genres = styled(Row)`
+  color: #c7bbbbc8;
+`
+
+const Info = styled(Row)`
   color: white;
 `
