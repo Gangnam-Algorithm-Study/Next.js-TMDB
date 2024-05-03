@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import { DataProps, InfinitePageProps } from '@/types/pageScroll'
 import { useRouter } from 'next/router'
 import { saveScrollY } from '@/utils/scroll'
+import Card from '@/components/Card'
 
 export default function Row({ data }: { data: InfinitePageProps }) {
   const router = useRouter()
@@ -17,12 +18,7 @@ export default function Row({ data }: { data: InfinitePageProps }) {
       {data.pages.map((group: DataProps, index: number) => (
         <div key={index}>
           {group.results.map((movie: Movie) => (
-            <div key={movie.id}>
-              <button onClick={() => handle(movie.id)}>
-                <Thumbnail imagePath={movie.poster_path} title={movie.title} />
-                <p key={movie.id}>{movie.title}</p>
-              </button>
-            </div>
+            <Card movie={movie} key={movie.id} />
           ))}
         </div>
       ))}
