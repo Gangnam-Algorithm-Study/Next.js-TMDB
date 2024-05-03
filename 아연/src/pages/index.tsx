@@ -2,6 +2,12 @@ import { useEffect } from 'react'
 import styled from '@emotion/styled'
 
 export default function Home() {
+  useEffect(() => {
+    setTimeout(function () {
+      location.href = 'home'
+    }, 2040)
+  })
+
   return (
     <Container>
       <GIF src="/img/netflix.gif" />

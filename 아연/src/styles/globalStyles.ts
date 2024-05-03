@@ -113,6 +113,7 @@ export default css`
   body {
     line-height: 1;
     font-family: 'Ydestreet', 'Noto Sans', sans-serif;
+    background: black;
   }
   ol,
   ul {
