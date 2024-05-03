@@ -1,5 +1,5 @@
-import { Movie } from '@/typings'
-import Image from 'next/image'
+import { Movie } from '@/types/movie'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 interface ThumbnailProps {
   imagePath: Movie['poster_path']
@@ -8,10 +8,8 @@ interface ThumbnailProps {
 function Thumbnail({ imagePath, title }: ThumbnailProps) {
   return (
     <div>
-      <Image
-        src={`https://image.tmdb.org/t/p/original${imagePath}`}
-        width={150}
-        height={28}
+      <LazyLoadImage
+        src={`https://image.tmdb.org/t/p/w500${imagePath}`}
         alt={title}
       />
     </div>

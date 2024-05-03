@@ -1,4 +1,3 @@
-import Thumbnail from '@/components/Thumbnail'
 import { Movie } from '@/types/movie'
 import styled from '@emotion/styled'
 import { DataProps, InfinitePageProps } from '@/types/pageScroll'
