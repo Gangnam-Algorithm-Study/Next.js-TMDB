@@ -94,14 +94,17 @@ const MovieFilter: FC<Props> = ({ onSearch }) => {
     }
   }, []);
 
+  /** 개봉일 조회 시작 날짜 */
   const handleChangeFromDate = useCallback((value: any) => {
     setFromDate(value);
   }, []);
 
+  /** 개봉일 조회 종료 날짜 */
   const handleChangeToDate = useCallback((value: any) => {
     setToDate(value);
   }, []);
 
+  /** 런타임 선택  */
   const handleChangeRunTime = useCallback((_runTime: number[]) => {
     setRunTime(_runTime);
   }, []);

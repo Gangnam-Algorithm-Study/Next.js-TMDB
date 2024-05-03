@@ -5,9 +5,8 @@ import Header from "../_component/Header";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { GetFilterMoviesOption, getFilterMovies } from "@/api";
-import Link from "next/link";
 import MovieFilter from "./_component/MovieFilter";
-import dayjs from "dayjs";
+import MovieCard from "../_component/MovieCard";
 
 const MovieTamplete = () => {
   const observer = useRef<HTMLDivElement>(null);
@@ -40,8 +39,6 @@ const MovieTamplete = () => {
     getNextPageParam: (_, allPages) => allPages.length + 1,
     initialPageParam: 1,
   });
-
-  console.log(filterMovies);
 
   const isEnd =
     filterMovies?.pages?.[filterMovies?.pages?.length - 1]?.total_results ===
@@ -102,26 +99,10 @@ const MovieTamplete = () => {
 
           <div className="right">
             <div className="itemWrap">
-              {filterMovies?.pages.map((v) =>
-                v.results
+              {filterMovies?.pages.map((page) =>
+                page.results
                   .filter((result) => result.poster_path !== null)
-                  .map((result) => (
-                    <div className="item" key={result.id}>
-                      <div className="posterContainer">
-                        <Link href={`/movie/${result.id}`} legacyBehavior>
-                          <img
-                            src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
-                            alt="Movie Poster"
-                            className="poster"
-                          />
-                        </Link>
-                      </div>
-                      <div className="name">{result.title}</div>
-                      <div className="releaseDate">
-                        {dayjs(result.release_date).format("MM월 DD, YYYY")}
-                      </div>
-                    </div>
-                  ))
+                  .map((movie) => <MovieCard key={movie.id} movie={movie} />)
               )}
             </div>
             {!isEnd && (
@@ -170,45 +151,6 @@ const MovieTemplateStyle = styled.div`
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
           grid-gap: 15px;
-
-          & > .item {
-            box-sizing: border-box;
-
-            & > .posterContainer {
-              cursor: pointer;
-
-              position: relative;
-              display: flex;
-              overflow: hidden;
-              padding-top: 150%;
-              background: #0a151f;
-              transition: opacity 0.1s ease;
-              border-radius: 5px;
-
-              height: 80%;
-
-              & > .poster {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-
-                border-radius: 10px;
-
-                object-fit: cover;
-                object-position: center;
-              }
-            }
-
-            & > .name {
-              margin-top: 10px;
-              font-size: 15px;
-              font-weight: 600;
-            }
-          }
         }
 
         & > .loadButton {

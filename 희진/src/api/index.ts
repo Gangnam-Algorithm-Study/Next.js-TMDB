@@ -138,7 +138,7 @@ export interface GetFilterMoviesOption {
   release_date_lte?: string;
 }
 
-/** 필터 영화 조회 */
+/** 필터된 영화 조회 */
 export const getFilterMovies = async (
   pageParam: number,
   option: GetFilterMoviesOption
