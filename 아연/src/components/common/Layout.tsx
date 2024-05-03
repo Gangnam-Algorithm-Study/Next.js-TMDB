@@ -28,5 +28,5 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 2rem auto;
+  margin: 2rem auto; // 중앙 정렬
 `

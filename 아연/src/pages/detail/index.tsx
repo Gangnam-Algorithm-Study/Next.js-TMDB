@@ -42,11 +42,13 @@ const Detail = ({ id }: DetailProps) => {
             <Info>
               <div>Language: {data.original_language}</div>
               <div>Release: {data.release_date}</div>
+            </Info>
+            <Info>
               <div>RunTime: {data.runtime} min</div>
-              <div>Rate: {data.vote_average}</div>
+              <div>Rate: {data.vote_average}/10</div>
             </Info>
             <Row>
-              <div>{data.overview}</div>
+              <OverView>{data.overview}</OverView>
             </Row>
           </InfoWrapper>
         </Container>
@@ -78,27 +80,33 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-const Container = styled.div``
+const Container = styled.div`
+  gap: 2.5rem;
+`
 
 const InfoWrapper = styled.div`
-  margin-top: 2.5rem 0;
   color: white;
 `
 const Row = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1.5rem;
-  margin: 0.5rem 0;
+  margin: 1.5rem 0;
 `
 const Title = styled.div`
-  font-size: 2.5rem;
+  font-size: 4.5rem;
   color: white;
 `
 
 const Genres = styled(Row)`
+  font-size: 1.5rem;
   color: #c7bbbbc8;
 `
 
 const Info = styled(Row)`
+  font-size: 1.5rem;
   color: white;
+`
+const OverView = styled.div`
+  font-size: 1.8rem;
 `
