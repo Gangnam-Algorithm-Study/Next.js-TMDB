@@ -1,0 +1,17 @@
+@font-face {
+    font-family: "Ydestreet";
+    font-style: normal;
+    font-weight: large;
+    font-display: swap; /*로딩 되지 않았을 때 시스템 폰트*/ 
+    src: url('YdestreetL.woff') format('woff');
+     /* unicode-range:U+AC00-D7A3,U+0030-0039;;	/* 한글과 숫자 => 현재 전체 텍스트 폰트로 적용*/
+}
+
+@font-face {
+    font-family: "Ydestreet";
+    font-style: normal;
+    font-weight: bold;
+    font-display: swap; /*로딩 되지 않았을 때 시스템 폰트*/ 
+    src: url('YdestreetB.woff') format('woff');
+    /* unicode-range:U+AC00-D7A3,U+0030-0039;;	/* 한글과 숫자 => 현재 전체 텍스트 폰트로 적용*/
+}
