@@ -51,8 +51,8 @@ const MovieFilter: FC<Props> = ({ onSearch }) => {
   const [selectedProvider, setSelectedProvider] = useState<number[]>([]);
 
   const [isFilterCardClicked, setIsFilterCardClicked] = useState(false);
-  const [fromDate, setFromDate] = useState<dayjs.Dayjs>();
-  const [toDate, setToDate] = useState<dayjs.Dayjs>();
+  const [fromDate, setFromDate] = useState<dayjs.Dayjs>(dayjs());
+  const [toDate, setToDate] = useState<dayjs.Dayjs>(dayjs());
   const [runTime, setRunTime] = useState<number[]>([0, 400]);
   const [userScore, setUserScore] = useState<number[]>([0, 10]);
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
