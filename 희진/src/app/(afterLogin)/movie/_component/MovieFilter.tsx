@@ -58,14 +58,17 @@ const MovieFilter: FC<Props> = ({ onSearch }) => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
 
+  /** 정렬 카드 오픈 */
   const togglePriorityCard = useCallback(() => {
     setIsPriorityCardClicked((prev) => !prev);
   }, []);
 
+  /** 영화 제공 업체 카드 오픈 */
   const toggleProviderCard = useCallback(() => {
     setIsProviderCardClicked((prev) => !prev);
   }, []);
 
+  /** 영화 필터 카드 오픈 */
   const toggleFilterCard = useCallback(() => {
     setIsFilterCardClicked((prev) => !prev);
   }, []);
