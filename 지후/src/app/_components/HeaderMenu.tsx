@@ -26,7 +26,7 @@ export default function HeaderMenu({ menu, isOpen, setIsOpen }: Props) {
 
     return (
         <Flex alignItems={'center'} ml={10} h={'full'} position={'relative'} onMouseOver={handleOpenMenu} >
-            <Text fontSize={16} cursor={'pointer'}>
+            <Text fontSize={16} cursor={'pointer'} color={COLORS.white}>
                 {menu.title}
             </Text>
             {

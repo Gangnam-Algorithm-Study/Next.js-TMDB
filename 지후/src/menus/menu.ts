@@ -76,10 +76,10 @@ export const filterMenu: FilterMenuTypes[] = [
         title: '정렬',
         type: 'sort'
     },
-    {
-        title: 'Where To Watch',
-        type: 'whereWatch'
-    },
+    // {
+    //     title: 'Where To Watch',
+    //     type: 'whereWatch'
+    // },
     {
         title: '필터',
         type: 'filter'

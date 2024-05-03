@@ -7,6 +7,8 @@ import { Box, Button, ChakraProvider, Flex, Heading, Stack, Text } from '@chakra
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react'
 import HeaderMenu from './HeaderMenu';
+import { COLORS } from '@/assets/colors';
+import CoffieIcon from '@/assets/src/CoffieIcon';
 
 export default function Header() {
 
@@ -33,23 +35,27 @@ export default function Header() {
                 position={'sticky'}
                 transform={scroll ? 'translateY(0)' : 'translateY(-100%)'}
                 transition={'all 0.3s ease-in-out'}
-                bg="#042541"
+                bg={COLORS.black}
                 height={20}
                 w={'full'}
                 zIndex={999}
                 color="white"
-                paddingX={'10%'}
+                paddingX={'5%'}
                 onMouseOver={() => setIsOpen('')}
                 onMouseLeave={() => setIsOpen('')}
             >
                 <Flex alignItems="center" mr={5} h={'full'}>
-                    <Button
-                        onClick={() => router.replace('/')}
-                        backgroundColor={'transparent'}
-                        _hover={{ backgroundColor: 'transparent' }}
-                    >
-                        <Logo />
-                    </Button>
+                    <Flex alignItems={'center'} mr={5} cursor={'pointer'} onClick={() => router.push('/')}>
+                        <CoffieIcon />
+                        <Text
+                            color={COLORS.white}
+                            fontWeight={'bold'}
+                            fontSize={30}
+                            ml={3}
+                        >
+                            TMDB
+                        </Text>
+                    </Flex>
                     {
                         navMenu.map((menu) => (
                             <HeaderMenu menu={menu} key={menu.title} isOpen={isOpen} setIsOpen={setIsOpen} />
