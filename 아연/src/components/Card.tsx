@@ -35,7 +35,11 @@ const Card = ({ movie }: { movie: Movie }) => {
     >
       {isVisible ? (
         <CardWrapper>
-          <Thumbnail imagePath={movie.poster_path} title={movie.title} />
+          <Thumbnail
+            imagePath={movie.poster_path}
+            title={movie.title}
+            width={92}
+          />
           <InfoWrapper>
             <Title key={movie.id}>{movie.title}</Title>
             <Content>{movie.release_date}</Content>
@@ -61,7 +65,7 @@ const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
   gap: 1rem;
   color: white;
 `
