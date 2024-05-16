@@ -12,7 +12,6 @@ import { getScrollY, setScrollY } from '@/utils/scroll'
 
 const Home = () => {
   const loadMoreRef = useRef(null)
-  const listRef = useRef(null)
   const {
     data,
     error,
@@ -22,9 +21,9 @@ const Home = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ['fetchDocumentaries'],
+    queryKey: ['fetchTopRated'],
     queryFn: ({ pageParam }) =>
-      pagination(requests['fetchDocumentaries'], pageParam),
+      pagination(requests['fetchTopRated'], pageParam),
     initialPageParam: 1,
 
     getNextPageParam: (lastPage) => {
