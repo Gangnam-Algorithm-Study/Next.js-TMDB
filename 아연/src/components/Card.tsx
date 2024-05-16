@@ -32,6 +32,7 @@ const Card = ({ movie }: { movie: Movie }) => {
       onClick={() => handleCardClick()}
       key={movie.id}
       ref={target}
+      shallow={true}
     >
       {isVisible ? (
         <CardWrapper>

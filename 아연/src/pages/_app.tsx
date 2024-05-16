@@ -9,6 +9,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import globalStyles from '@/styles/globalStyles'
 import 'public/fonts/style.css'
 import Layout from '@/components/common/Layout'
+import requests from '@/utils/request'
+import pagination from '@/apis/pagination'
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,19 +36,6 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     </QueryClientProvider>
   )
 }
-App.getInitialProps = async ({
-  Component,
-  ctx,
-}: AppContext): Promise<AppInitialProps> => {
-  let pageProps = {}
-
-  if (Component.getInitialProps) {
-    pageProps = await Component.getInitialProps(ctx)
-  }
-
-  return { pageProps }
-}
-
 App.getInitialProps = async ({
   Component,
   ctx,

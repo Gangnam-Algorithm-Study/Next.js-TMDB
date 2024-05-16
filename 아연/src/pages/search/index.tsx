@@ -4,16 +4,24 @@ import SearchResult from '@/components/search/Result'
 import useIntersectionObserver from '@/hooks/useIntersectionObserver'
 import { Movie } from '@/types/movie'
 import { InfinitePageProps } from '@/types/pageScroll'
+import { flatFn, selectFn } from '@/utils/queryFn'
 import requests from '@/utils/request'
 import styled from '@emotion/styled'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
-import { FormEvent, useRef, useState } from 'react'
+import { FormEvent, useCallback, useRef, useState } from 'react'
 
 const Search = () => {
   const router = useRouter()
   const [text, setText] = useState('')
+  const [original_language, set_original_language] = useState('en')
+  const [genre, setGenre] = useState(18)
 
+  const filters = {
+    original_language: (lang: string) => lang === original_language,
+    genre_ids: (idArr: number[]) => idArr.includes(genre),
+  }
+  console.log(Object.keys(filters).length)
   const loadMoreRef = useRef(null)
   const {
     data,
@@ -24,7 +32,7 @@ const Search = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ['fetchSearch', text],
+    queryKey: ['fetchSearch', text, Object.keys(filters)],
     queryFn: ({ pageParam }) =>
       pagination(
         `${process.env.NEXT_PUBLIC_BASE_URL}/search/movie?query=${text}&api_key=${process.env.NEXT_PUBLIC_API_KEY}`,
@@ -35,9 +43,15 @@ const Search = () => {
     getNextPageParam: (lastPage) => {
       const { page, total_pages } = lastPage
       const result = page < total_pages ? page + 1 : undefined
-      console.log(page, total_pages, lastPage, result)
+      // console.log(page, total_pages, lastPage, result)
       return page < total_pages ? page + 1 : undefined
     },
+    select: (data) => ({
+      pages: Object.keys(filters).length
+        ? selectFn(data, filters)
+        : flatFn(data),
+      pageParams: data.pageParams,
+    }),
   })
   // useObserver로 넘겨줄 callback, entry로 넘어오는 HTMLElement가
   // isIntersecting이라면 무한 스크롤을 위한 fetchNextPage가 실행될 것이다.
@@ -58,8 +72,6 @@ const Search = () => {
     onIntersect,
   })
 
-  console.log(data?.pages[0].results)
-
   const handleGoBack = () => {
     //console.log(text)s
     router.replace('/home')
@@ -71,6 +83,7 @@ const Search = () => {
     console.log(text, data)
     setText('')
   }
+
   return (
     <>
       <Form onSubmit={(e) => handleTextSubmit(e)}>
@@ -88,7 +101,7 @@ const Search = () => {
 
       {status === 'success' && (
         <>
-          <List data={data as InfinitePageProps} />
+          <List data={data.pages} />
         </>
       )}
 

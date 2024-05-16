@@ -5,7 +5,7 @@ import Card from '@/components/Card'
 import { useEffect } from 'react'
 import { getScrollY, setScrollY } from '@/utils/scroll'
 
-export default function List({ data }: { data: InfinitePageProps }) {
+export default function List({ data }: { data: InfinitePageProps['pages'] }) {
   /*useEffect(() => {
     const scrollY = getScrollY()
     if (!scrollY) {
@@ -16,14 +16,16 @@ export default function List({ data }: { data: InfinitePageProps }) {
         console.log('scroll')
       }, 1500)
     }
-  }, [])*/
+  }, [data.pages.length])*/
+  console.log('enjlknelj', data)
   return (
     <ListWrapper>
-      {data.pages.map((group: DataProps, index: number) => (
+      {data.map((item: Movie, index: number) => (
         <div key={index}>
-          {group.results.map((movie: Movie) => (
+          <Card movie={item} key={item.id} />
+          {/*{group.map((movie: Movie) => (
             <Card movie={movie} key={movie.id} />
-          ))}
+          ))}*/}
         </div>
       ))}
     </ListWrapper>

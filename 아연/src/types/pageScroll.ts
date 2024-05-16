@@ -3,10 +3,10 @@ import { Movie } from '@/types/movie'
 export interface DataProps {
   total_pages: number
   page: number
-  results: Movie[]
+  /*results: Movie[]*/
 }
 
 export interface InfinitePageProps {
-  pages: DataProps[]
+  pages: Movie[]
   pageParams: number[]
 }

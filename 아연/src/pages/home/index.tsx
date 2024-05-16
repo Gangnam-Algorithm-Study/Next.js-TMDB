@@ -9,6 +9,8 @@ import { InfinitePageProps } from '@/types/pageScroll'
 import styled from '@emotion/styled'
 import { queryClient } from '@/pages/_app'
 import { getScrollY, setScrollY } from '@/utils/scroll'
+import { withCSR } from '@/hooks/withClient'
+import { GetServerSideProps } from 'next/types'
 
 const Home = () => {
   const loadMoreRef = useRef(null)
@@ -28,8 +30,8 @@ const Home = () => {
 
     getNextPageParam: (lastPage) => {
       const { page, total_pages } = lastPage
-      const result = page < total_pages ? page + 1 : undefined
-      console.log(page, total_pages, lastPage, result)
+      // const result = page < total_pages ? page + 1 : undefined
+      // console.log(page, total_pages, lastPage, result)
       return page < total_pages ? page + 1 : undefined
     },
   })
@@ -52,10 +54,10 @@ const Home = () => {
     onIntersect,
   })
 
-  console.log(data?.pages[0].results)
+  // console.log(data?.pages[0].results)
   return (
     <>
-      {status === 'pending' && <p>불러오는 중</p>}
+      {hasNextPage && !isFetching && <p>불러오는 중</p>}
 
       {status === 'error' && <p>{error.message}</p>}
 
@@ -66,28 +68,27 @@ const Home = () => {
       )}
 
       <Hide ref={loadMoreRef} />
-
-      {isFetchingNextPage && <p>계속 불러오는 중</p>}
     </>
   )
 }
 
 export default Home
 
-export async function getServerSideProps() {
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: ['fetchDocumentaries'],
+const getServerSideProps: GetServerSideProps = withCSR(async (ctx: any) => {
+  queryClient.prefetchInfiniteQuery({
+    queryKey: ['fetchTopRated'],
     queryFn: ({ pageParam }) =>
-      pagination(requests['fetchDocumentaries'], pageParam),
+      pagination(requests['fetchTopRated'], pageParam),
     initialPageParam: 1,
   })
+  console.log('server side')
 
   return {
     props: {
       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   }
-}
+})
 
 const Hide = styled.div`
   height: 1px;
