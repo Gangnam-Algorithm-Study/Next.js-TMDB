@@ -2,8 +2,21 @@ import { Movie } from '@/types/movie'
 import styled from '@emotion/styled'
 import { DataProps, InfinitePageProps } from '@/types/pageScroll'
 import Card from '@/components/Card'
+import { useEffect } from 'react'
+import { getScrollY, setScrollY } from '@/utils/scroll'
 
-export default function Row({ data }: { data: InfinitePageProps }) {
+export default function List({ data }: { data: InfinitePageProps }) {
+  /*useEffect(() => {
+    const scrollY = getScrollY()
+    if (!scrollY) {
+      return
+    } else if (scrollY) {
+      setTimeout(() => {
+        setScrollY(scrollY)
+        console.log('scroll')
+      }, 1500)
+    }
+  }, [])*/
   return (
     <ListWrapper>
       {data.pages.map((group: DataProps, index: number) => (

@@ -6,10 +6,7 @@ export const saveScrollY = () => {
 export const getScrollY = () => {
   return Number(localStorage.getItem(SCROLL_Y_Key))
 }
-export const setScrollY = () => {
-  setTimeout(() => {
-    window.scrollTo({ top: getScrollY() })
-
-    localStorage.removeItem(SCROLL_Y_Key)
-  }, 1000)
+export const setScrollY = (scrollY: number) => {
+  scroll({ top: scrollY + 50, behavior: 'smooth' })
+  localStorage.removeItem(SCROLL_Y_Key)
 }

@@ -4,7 +4,7 @@ import { dehydrate, useInfiniteQuery } from '@tanstack/react-query'
 import pagination from '@/apis/pagination'
 import { useEffect, useRef } from 'react'
 import useIntersectionObserver from '@/hooks/useIntersectionObserver'
-import Row from '@/components/List'
+import List from '@/components/List'
 import { InfinitePageProps } from '@/types/pageScroll'
 import styled from '@emotion/styled'
 import { queryClient } from '@/pages/_app'
@@ -12,6 +12,7 @@ import { getScrollY, setScrollY } from '@/utils/scroll'
 
 const Home = () => {
   const loadMoreRef = useRef(null)
+  const listRef = useRef(null)
   const {
     data,
     error,
@@ -36,12 +37,13 @@ const Home = () => {
   // useObserver로 넘겨줄 callback, entry로 넘어오는 HTMLElement가
   // isIntersecting이라면 무한 스크롤을 위한 fetchNextPage가 실행될 것이다.
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
-    console.log(
+    /*console.log(
       'Onintersecting',
       entry.isIntersecting,
       entry.intersectionRect,
       isFetchingNextPage,
     )
+    */
     entry.isIntersecting && fetchNextPage()
   }
 
@@ -50,12 +52,6 @@ const Home = () => {
     target: loadMoreRef,
     onIntersect,
   })
-
-  useEffect(() => {
-    if (getScrollY()) {
-      setScrollY()
-    }
-  }, [])
 
   console.log(data?.pages[0].results)
   return (
@@ -66,7 +62,7 @@ const Home = () => {
 
       {status === 'success' && (
         <>
-          <Row data={data as InfinitePageProps} />
+          <List data={data as InfinitePageProps} />
         </>
       )}
 
