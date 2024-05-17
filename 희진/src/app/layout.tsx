@@ -7,6 +7,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 import "rc-calendar/assets/index.css";
+import Provider from "./Provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ReactQueryProviders>
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          <StyledComponentsRegistry>
+            <Provider>{children}</Provider>
+          </StyledComponentsRegistry>
         </ReactQueryProviders>
       </body>
     </html>

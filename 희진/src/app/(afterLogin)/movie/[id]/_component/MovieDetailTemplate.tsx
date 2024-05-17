@@ -3,10 +3,10 @@
 import { FC } from "react";
 import { styled } from "styled-components";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import cx from "classnames";
 import { useQuery } from "@tanstack/react-query";
-import { getDetailMovie, getMovieCredits, getMovieGrades } from "@/api";
+import { getDetailMovie, getMovieCredits, getMovieVideos } from "@/api";
 import { useParams } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -34,18 +34,29 @@ const MovieDetailTemplate: FC = () => {
     queryFn: movieId ? () => getMovieCredits(+movieId) : undefined,
   });
 
-  const { data: movieGrades } = useQuery({
-    queryKey: ["movieCredits"],
-    queryFn: getMovieGrades,
+  const { data: movieVideos } = useQuery({
+    queryKey: ["movieVideos", +movieId],
+    queryFn: movieId ? () => getMovieVideos(+movieId) : undefined,
   });
 
-  console.log(movieGrades);
+  console.log(movieVideos);
+
+  const videoKey = movieVideos?.results[0]?.key;
 
   const directorName = movieCredits?.crew?.find(
     (crewMember) => crewMember?.job === "Director"
   )?.name;
 
   const [isClick, setIsClick] = useState<Menu>("outline");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const handleModalClose = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
 
   const handleIsClick = useCallback((item: Menu) => {
     setIsClick(item);
@@ -58,7 +69,8 @@ const MovieDetailTemplate: FC = () => {
   }, []);
 
   return (
-    <MovieDetailTemplateStyle>
+    <MovieDetailTemplateStyle isModalOpen={isModalOpen}>
+      <div className="backdrop" onClick={handleModalClose} />
       <Header />
       <ul className="menu">
         <li
@@ -106,7 +118,6 @@ const MovieDetailTemplate: FC = () => {
                 {movie?.title} <span>({movie?.release_date?.slice(0, 4)})</span>
               </div>
               <div className="info">
-                <div className="age">All</div>
                 <div className="date">
                   {dayjs(movie?.release_date).format("YYYY/MM/DD")} (
                   {movie?.original_language.toUpperCase()})
@@ -119,6 +130,9 @@ const MovieDetailTemplate: FC = () => {
 
                 <div className="time">
                   {handleChangeMovieRuntime(movie!.runtime)}
+                </div>
+                <div className="trailer" onClick={handleModalOpen}>
+                  예고편 재생
                 </div>
               </div>
               <div className="contentContainer">
@@ -163,6 +177,18 @@ const MovieDetailTemplate: FC = () => {
               )
           )}
         </Swiper>
+        {isModalOpen && (
+          <Modal>
+            <iframe
+              width="100%"
+              height="100%"
+              src={`https://www.youtube.com/embed/${videoKey}`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </Modal>
+        )}
       </div>
     </MovieDetailTemplateStyle>
   );
@@ -170,7 +196,30 @@ const MovieDetailTemplate: FC = () => {
 
 export default MovieDetailTemplate;
 
-const MovieDetailTemplateStyle = styled.div`
+interface MovieDetailTemplateStyleProps {
+  isModalOpen?: boolean;
+}
+
+const MovieDetailTemplateStyle = styled.div<MovieDetailTemplateStyleProps>`
+  height: 100vh;
+  position: relative;
+
+  & > .backdrop {
+    display: ${(props) => (props.isModalOpen ? "block" : "none")};
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+
+    background-color: rgba(0, 0, 0, 0.6);
+
+    cursor: pointer;
+  }
   & > .menu {
     display: flex;
 
@@ -272,6 +321,23 @@ const MovieDetailTemplateStyle = styled.div`
             & > .time {
               margin-left: 20px;
               color: #fff;
+            }
+
+            & > .trailer {
+              cursor: pointer;
+
+              padding: 5px 10px;
+
+              border: 1px solid #fff;
+              border-radius: 10px;
+
+              margin-left: 20px;
+              color: #fff;
+
+              &:hover {
+                border: 1px solid #b49d99;
+                color: #b49d99;
+              }
             }
           }
 
@@ -383,49 +449,22 @@ const MovieDetailTemplateStyle = styled.div`
       font-size: 0.9em;
     }
   }
-  /* & > .creditWrap {
-    & > .creditContainer {
-      display: flex;
-      flex-wrap: wrap;
+`;
 
-      & > .creditItem {
-        width: 33.3%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+const Modal = styled.div`
+  position: fixed;
 
-        padding: 4px 3px;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
 
-        & > .item {
-          width: 300px;
-          border-radius: 10px;
+  width: 80%;
+  height: 80%;
 
-          border: 1px solid #e3e3e3;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-          text-align: center;
-
-          & > img {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-
-            width: 100%;
-            height: 200px;
-            object-fit: contain;
-
-            vertical-align: middle;
-          }
-
-          & > .name {
-            font-weight: 700;
-            color: #000;
-          }
-
-          & > .character {
-            font-size: 0.9em;
-          }
-        }
-      }
-    }
-  } */
+  background: rgba(0, 0, 0, 0.8);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
 `;
