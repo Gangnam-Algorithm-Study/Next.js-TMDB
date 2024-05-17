@@ -1,9 +1,32 @@
 "use client";
 
 import Header from "@/app/(afterLogin)/_component/Header";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
+import { signIn } from "next-auth/react";
 
 const SignUpTemplate = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleChangeId = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setId(e.target.value);
+    },
+    []
+  );
+
+  const handleChangePassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPassword(e.target.value);
+    },
+    []
+  );
+
+  const handleLogin = useCallback(async () => {
+    await signIn("credentials", { id, password, callbackUrl: "/home" });
+  }, [id, password]);
+
   return (
     <SignUpTemplateStyle>
       <Header />
@@ -12,14 +35,26 @@ const SignUpTemplate = () => {
         <div className="inputWrap">
           <label htmlFor="username">
             아이디
-            <input type="text" id="username" />
+            <input
+              type="text"
+              id="username"
+              onChange={handleChangeId}
+              value={id}
+            />
           </label>
           <label htmlFor="password">
             비밀번호
-            <input type="password" id="password" />
+            <input
+              type="password"
+              id="password"
+              onChange={handleChangePassword}
+              value={password}
+            />
           </label>
         </div>
-        <div className="button">로그인</div>
+        <div className="button" onClick={handleLogin}>
+          로그인
+        </div>
       </div>
     </SignUpTemplateStyle>
   );

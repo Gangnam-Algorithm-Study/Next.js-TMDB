@@ -7,6 +7,7 @@ import {
   IMovieLanguage,
   IMovieNowplayingItem,
   IMovieProvider,
+  IMovieVideo,
   MovieResult,
 } from "@/@types";
 import axios from "axios";
@@ -199,6 +200,21 @@ export const getMovieLanguages = async () => {
 export const getMovieProviders = async () => {
   const response = await axios.get<IMovieProvider>(
     `${BASE_URL}/watch/providers/movie`,
+    {
+      params: {
+        api_key: API_KEY,
+        language: "ko-kr",
+        certifications: "KR",
+      },
+    }
+  );
+  return response.data;
+};
+
+/** 영화 예고편 조회 */
+export const getMovieVideos = async (movieId: number) => {
+  const response = await axios.get<IMovieVideo>(
+    `${BASE_URL}/movie/${movieId}/videos`,
     {
       params: {
         api_key: API_KEY,

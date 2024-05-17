@@ -1,11 +1,23 @@
 "use client";
 
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { styled } from "styled-components";
+const jwt = require("jsonwebtoken");
 
 const Header = () => {
   const [isHidden, setIsHidden] = useState(false);
+  const { data: session } = useSession();
+
+  const localJwt = localStorage.getItem("JWT");
+
+  const decoded = localJwt ? jwt.decode(localJwt) : null;
+  console.log(decoded, "decode");
+
+  const handleLogout = useCallback(async () => {
+    await signOut();
+  }, []);
 
   useEffect(() => {
     const handleScrollHide = () => {
@@ -40,14 +52,25 @@ const Header = () => {
           <Link href="/more">
             <strong>More</strong>
           </Link>
+          {/* {decoded?.profile && (
+            <div>
+              <img src={decoded?.profile} alt="Profile" />
+            </div>
+          )} */}
         </div>
         <div className="headerRight">
-          <Link href="/more">
-            <strong>로그인</strong>
-          </Link>
-          <Link href="/more">
-            <strong>회원가입</strong>
-          </Link>
+          {!session ? (
+            <>
+              <Link href="/SignIn">
+                <strong>로그인</strong>
+              </Link>
+              <Link href="/more">
+                <strong>회원가입</strong>
+              </Link>
+            </>
+          ) : (
+            <strong onClick={handleLogout}>로그아웃</strong>
+          )}
         </div>
       </div>
     </HeaderStyle>
