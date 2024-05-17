@@ -8,7 +8,7 @@ async function pagination(url: string, pageParam: number): Promise<DataProps> {
   const { page, results, total_pages } = await response.json()
   // console.log('API', page, total_pages)
 
-  return { page, results, total_pages }
+  return { page, total_pages }
 }
 
 export default pagination

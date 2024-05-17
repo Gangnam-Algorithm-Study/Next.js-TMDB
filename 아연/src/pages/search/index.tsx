@@ -35,7 +35,7 @@ const Search = () => {
     queryKey: ['fetchSearch', text, Object.keys(filters)],
     queryFn: ({ pageParam }) =>
       pagination(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/search/movie?query=${text}&api_key=${process.env.NEXT_PUBLIC_API_KEY}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/search/movie?query=${text}&language=ko&region=kr&api_key=${process.env.NEXT_PUBLIC_API_KEY}`,
         pageParam,
       ),
     initialPageParam: 1,

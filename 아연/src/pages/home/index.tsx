@@ -11,6 +11,7 @@ import { queryClient } from '@/pages/_app'
 import { getScrollY, setScrollY } from '@/utils/scroll'
 import { withCSR } from '@/hooks/withClient'
 import { GetServerSideProps } from 'next/types'
+import { flatFn } from '@/utils/queryFn'
 
 const Home = () => {
   const loadMoreRef = useRef(null)
@@ -34,6 +35,10 @@ const Home = () => {
       // console.log(page, total_pages, lastPage, result)
       return page < total_pages ? page + 1 : undefined
     },
+    select: (data) => ({
+      pages: flatFn(data),
+      pageParams: data.pageParams,
+    }),
   })
   // useObserver로 넘겨줄 callback, entry로 넘어오는 HTMLElement가
   // isIntersecting이라면 무한 스크롤을 위한 fetchNextPage가 실행될 것이다.
@@ -63,7 +68,7 @@ const Home = () => {
 
       {status === 'success' && (
         <>
-          <List data={data as InfinitePageProps} />
+          <List data={data.pages} />
         </>
       )}
 
