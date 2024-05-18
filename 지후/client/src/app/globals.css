@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main_layout_container {
+    display: flex;
+    width: 100%;
+}
