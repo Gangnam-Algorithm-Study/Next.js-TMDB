@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
 import styled from '@emotion/styled'
+import requests from '@/utils/request'
+import pagination from '@/apis/pagination'
+import { queryClient } from '@/pages/_app'
 
 export default function Home() {
   useEffect(() => {

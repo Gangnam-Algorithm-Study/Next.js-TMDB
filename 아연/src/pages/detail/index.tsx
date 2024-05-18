@@ -21,7 +21,7 @@ const Detail = ({ id }: DetailProps) => {
     staleTime: 1000000,
   })
 
-  console.log(data)
+  // console.log(data)
 
   return (
     <>

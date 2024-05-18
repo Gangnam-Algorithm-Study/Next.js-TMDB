@@ -16,7 +16,7 @@ const Card = ({ movie }: { movie: Movie }) => {
   }
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
-    console.log('Onintersecting', entry.isIntersecting)
+    // console.log('Onintersecting', entry.isIntersecting)
     entry.isIntersecting ? setIsVisible(true) : setIsVisible(false)
   }
 
@@ -32,6 +32,7 @@ const Card = ({ movie }: { movie: Movie }) => {
       onClick={() => handleCardClick()}
       key={movie.id}
       ref={target}
+      shallow={true}
     >
       {isVisible ? (
         <CardWrapper>

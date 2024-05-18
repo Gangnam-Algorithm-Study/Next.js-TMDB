@@ -20,7 +20,9 @@ export async function prefetchDetail(id: Movie['id']): Promise<void> {
 }
 
 export async function getDetail(id: Movie['id']): Promise<any> {
-  const response = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`)
+  const response = await fetch(
+    `${BASE_URL}/movie/${id}?region=kr&language=ko&api_key=${API_KEY}&append_to_response=credits`,
+  )
 
   const data = await response.json()
 
