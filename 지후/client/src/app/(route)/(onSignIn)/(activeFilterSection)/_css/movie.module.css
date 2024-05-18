@@ -1,0 +1,21 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    background-color: #21201E;
+    justify-content: space-between;
+}
+
+.page_container {
+    display: flex;
+    flex: 1;
+    background-color: #21201E;
+}
+
+.pages {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+    min-height: 100%;
+}
