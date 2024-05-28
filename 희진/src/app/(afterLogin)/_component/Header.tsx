@@ -13,7 +13,6 @@ const Header = () => {
   const localJwt = localStorage.getItem("JWT");
 
   const decoded = localJwt ? jwt.decode(localJwt) : null;
-  console.log(decoded, "decode");
 
   const handleLogout = useCallback(async () => {
     await signOut();
@@ -64,12 +63,17 @@ const Header = () => {
               <Link href="/SignIn">
                 <strong>로그인</strong>
               </Link>
-              <Link href="/more">
+              <Link href="/SignUp">
                 <strong>회원가입</strong>
               </Link>
             </>
           ) : (
-            <strong onClick={handleLogout}>로그아웃</strong>
+            <>
+              <strong onClick={handleLogout}>로그아웃</strong>
+              <Link href="/movie/favorite">
+                <strong>즐겨찾기</strong>
+              </Link>
+            </>
           )}
         </div>
       </div>

@@ -2,11 +2,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
 
-const dummyUser = {
-  id: "test",
-  password: "test",
-};
-
 const handler = NextAuth({
   pages: {
     signIn: "/SignIn",
@@ -16,13 +11,13 @@ const handler = NextAuth({
       name: "credentials",
       credentials: {},
       async authorize(credentials) {
-        const { id, password } = credentials as any;
+        const { user } = credentials as any;
 
-        if (id !== dummyUser.id || password !== dummyUser.password) {
+        if (!user) {
           return null;
         }
 
-        return dummyUser;
+        return user;
       },
     }),
   ],
@@ -35,7 +30,7 @@ const handler = NextAuth({
 
       return token;
     },
-    async session({ session, token }: { session: any; token: JWT }) {
+    async session({ session, token, user }: { session: any; token: JWT }) {
       session.user = { ...token };
 
       return session;

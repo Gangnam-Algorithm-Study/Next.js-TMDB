@@ -16,6 +16,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import dayjs from "dayjs";
 import Header from "@/app/(afterLogin)/_component/Header";
+import { useSession } from "next-auth/react";
 
 type Menu = "outline" | "media" | "fandom" | "share";
 
@@ -23,6 +24,7 @@ const MovieDetailTemplate: FC = () => {
   const parms = useParams();
 
   const movieId = parms.id;
+  const { data: user } = useSession();
 
   const { data: movie } = useQuery({
     queryKey: ["movie", +movieId],
@@ -39,8 +41,6 @@ const MovieDetailTemplate: FC = () => {
     queryFn: movieId ? () => getMovieVideos(+movieId) : undefined,
   });
 
-  console.log(movieVideos);
-
   const videoKey = movieVideos?.results[0]?.key;
 
   const directorName = movieCredits?.crew?.find(
@@ -49,6 +49,20 @@ const MovieDetailTemplate: FC = () => {
 
   const [isClick, setIsClick] = useState<Menu>("outline");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(() => {
+    const users = localStorage.getItem("users")
+      ? JSON.parse(localStorage.getItem("users")!)
+      : [];
+    for (let userId in users) {
+      const favorites = users[userId].favorites || [];
+
+      if (favorites.includes(movieId)) {
+        return true;
+      }
+    }
+
+    return false;
+  });
 
   const handleModalOpen = useCallback(() => {
     setIsModalOpen(true);
@@ -61,6 +75,27 @@ const MovieDetailTemplate: FC = () => {
   const handleIsClick = useCallback((item: Menu) => {
     setIsClick(item);
   }, []);
+
+  /** 즐겨찾기 버튼 클릭 */
+  const handleHeartClick = useCallback(() => {
+    setIsFavorite((prev) => !prev);
+
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
+
+    for (let userId in users) {
+      const favorites = users[userId].favorites || [];
+
+      if (favorites.includes(movieId)) {
+        users[userId].favorites = favorites.filter(
+          (id: string) => id !== movieId
+        );
+      } else {
+        users[userId].favorites = [...favorites, movieId];
+      }
+    }
+
+    localStorage.setItem("users", JSON.stringify(users));
+  }, [movieId]);
 
   const handleChangeMovieRuntime = useCallback((runtime: number) => {
     const hours = Math.floor(runtime / 60);
@@ -116,6 +151,20 @@ const MovieDetailTemplate: FC = () => {
             <div className="right">
               <div className="title">
                 {movie?.title} <span>({movie?.release_date?.slice(0, 4)})</span>
+                <div className="heart" onClick={handleHeartClick}>
+                  <svg
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1.4875 9.88755L7.13438 15.1594C7.36875 15.3782 7.67812 15.5 8 15.5C8.32187 15.5 8.63125 15.3782 8.86563 15.1594L14.5125 9.88755C15.4625 9.00317 16 7.76255 16 6.46567V6.28442C16 4.10005 14.4219 2.23755 12.2688 1.87817C10.8438 1.64067 9.39375 2.1063 8.375 3.12505L8 3.50005L7.625 3.12505C6.60625 2.1063 5.15625 1.64067 3.73125 1.87817C1.57812 2.23755 0 4.10005 0 6.28442V6.46567C0 7.76255 0.5375 9.00317 1.4875 9.88755Z"
+                      fill={isFavorite ? "#FF4A4A" : "#fff"}
+                    />
+                  </svg>
+                </div>
               </div>
               <div className="info">
                 <div className="date">
@@ -281,6 +330,9 @@ const MovieDetailTemplateStyle = styled.div<MovieDetailTemplateStyleProps>`
           padding-left: 40px;
 
           & > .title {
+            display: flex;
+            align-items: center;
+
             font-weight: 700;
             color: #fff;
 
@@ -289,6 +341,15 @@ const MovieDetailTemplateStyle = styled.div<MovieDetailTemplateStyleProps>`
             & > span {
               opacity: 0.8;
               font-weight: 400;
+            }
+
+            & > .heart {
+              cursor: pointer;
+              margin-left: 20px;
+              & > svg {
+                width: 25px;
+                height: 25px;
+              }
             }
           }
 
