@@ -1,17 +1,16 @@
 "use client";
 
 import Header from "@/app/(afterLogin)/_component/Header";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
-import { signIn } from "next-auth/react";
 
-const SignInTemplate = () => {
-  const users = localStorage.getItem("users")
-    ? (JSON.parse(localStorage.getItem("users")!) as any[])
-    : [];
+const SignUpTemplate = () => {
+  const router = useRouter();
 
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const handleChangeId = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,31 +26,33 @@ const SignInTemplate = () => {
     []
   );
 
-  const handleLogin = useCallback(async () => {
-    const _user = users.find((user) => user.id === id);
+  const handleChangePasswordConfirm = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPasswordConfirm(e.target.value);
+    },
+    []
+  );
 
-    if (id.length === 0) {
-      alert("ID를 입력해주세요.");
-      return;
-    } else if (password.length === 0) {
-      alert("비밀번호를 입력해주세요.");
-      return;
-    } else if (_user?.password === password) {
-      await signIn("credentials", {
-        user: _user,
-        callbackUrl: "/home",
-      });
+  const handleSignUp = useCallback(() => {
+    if (password !== passwordConfirm) {
+      alert("비밀번호가 일치하지 않습니다.");
     } else {
-      alert("아이디 또는 비밀번호가 일치하지 않습니다.");
-      return;
+      router.replace("/SignIn");
+      const user = { id, password, favorites: [] };
+
+      const users = localStorage.getItem("users")
+        ? (JSON.parse(localStorage.getItem("users")!) as any[])
+        : [];
+
+      localStorage.setItem("users", JSON.stringify([...users, user]));
     }
-  }, [id, password, users]);
+  }, [id, password, passwordConfirm, router]);
 
   return (
-    <SignInTemplateStyle>
+    <SignUpTemplateStyle>
       <Header />
       <div className="loginContainer">
-        <h2 className="title">로그인</h2>
+        <h2 className="title">회원가입</h2>
         <div className="inputWrap">
           <label htmlFor="username">
             아이디
@@ -71,18 +72,27 @@ const SignInTemplate = () => {
               value={password}
             />
           </label>
+          <label htmlFor="password">
+            비밀번호 확인
+            <input
+              type="password"
+              id="password"
+              onChange={handleChangePasswordConfirm}
+              value={passwordConfirm}
+            />
+          </label>
         </div>
-        <div className="button" onClick={handleLogin}>
-          로그인
+        <div className="button" onClick={handleSignUp}>
+          회원가입
         </div>
       </div>
-    </SignInTemplateStyle>
+    </SignUpTemplateStyle>
   );
 };
 
-export default SignInTemplate;
+export default SignUpTemplate;
 
-const SignInTemplateStyle = styled.div`
+const SignUpTemplateStyle = styled.div`
   padding-top: 67px;
 
   & > .loginContainer {
