@@ -1,11 +1,12 @@
 "use client"
 
+import { getLikeMovie } from '@/api/user';
 import Loading from '@/app/_components/Loading';
 import MovieCard from '@/app/_components/MovieCard';
 import { COLORS } from '@/assets/colors';
 import { MovieTypes } from '@/types/movie';
 import { Button, Center, ChakraProvider, Flex, Grid, Text } from '@chakra-ui/react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation';
 import React from 'react'
@@ -26,7 +27,13 @@ export default function MovieSection() {
 
     const user_id = session.data?.user.id;
 
-    const data = queryClient.getQueryData<FavouriteMovie | undefined>(['like_movie', user_id]);
+    // const data = queryClient.getQueryData<FavouriteMovie | undefined>(['like_movie', user_id]);
+
+    const { data } = useQuery({
+        queryKey: ['like_movie', user_id],
+        queryFn: getLikeMovie,
+        enabled: !!user_id
+    })
 
     if (!data) {
         return (

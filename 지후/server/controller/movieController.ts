@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Movie as IMovie } from "../@types/SchemaTypes";
+import { Movie as IMovie, MovieTypes } from "../@types/SchemaTypes";
 import { Movie } from "../model/movieModel";
 
 export const addLikeMovie = async (req: Request, res: Response, next: NextFunction) => {
@@ -36,6 +36,43 @@ export const addLikeMovie = async (req: Request, res: Response, next: NextFuncti
         next(error);
     } finally {
         console.log('영화 좋아요 추가 완료');
+    }
+}
+
+export const addLikeMovieList = async (user_id: string, movie: MovieTypes) => {
+    console.log(user_id, movie);
+    try {
+        const list = await Movie.findOne({ user_id });
+        if (list) {
+            const findCheckMovie = list?.movie_list.find((m: IMovie['movie_list'][0]) => m.id === Number(movie.id));
+
+            if (findCheckMovie) {
+                list.movie_list = list?.movie_list.filter((m: IMovie['movie_list'][0]) => m.id !== Number(movie.id));
+                await list?.save();
+
+                return {
+                    status: true,
+                    message: 'Movie removed successfully',
+                }
+            }
+
+            console.log(movie);
+            list?.movie_list.push(movie);
+
+            await list?.save();
+
+            return {
+                status: true
+            }
+        } else {
+            return {
+                status: false
+            }
+        }
+    } catch (error) {
+        return {
+            status: false
+        }
     }
 }
 

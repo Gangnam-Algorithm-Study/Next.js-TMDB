@@ -40,7 +40,7 @@ export default function ContentSection() {
                 </Button>
                 <Flex mt={5}>
                     <Text color={COLORS.white} mr={2}>
-                        Don't have an account?
+                        Don&apos;t have an account?
                     </Text>
                     <Text color={COLORS.white} fontWeight={'bold'} cursor={'pointer'} onClick={() => setSignUpModal(true)}>
                         Sign Up
